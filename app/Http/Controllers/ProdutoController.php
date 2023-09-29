@@ -65,9 +65,4 @@ class ProdutoController extends Controller
         return redirect('/produtos');
     }
 
-
-
-
-
-
 }
