@@ -15,8 +15,6 @@
             <th>Id</th>
             <th>Nome</th>
             <th>Descrição</th>
-            <th>Exercício do treino</th>
-            <th>Atleta do treino</th>
 
         </tr>
         </thead>

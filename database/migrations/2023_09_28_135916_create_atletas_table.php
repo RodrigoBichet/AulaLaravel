@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('email');
             $table->text('telefone');
             $table->date('data_de_nascimento');
-            $table->integer('cpf');
+            $table->string('cpf');
             $table->text('altura');
             $table->text('peso');
             $table->timestamps();

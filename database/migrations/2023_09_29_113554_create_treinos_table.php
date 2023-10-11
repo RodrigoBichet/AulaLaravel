@@ -15,8 +15,12 @@ return new class extends Migration
             $table->id();
             $table->text('nome');
             $table->text('descricao');
-            $table->text('exercicio_treino');
-            $table->text('atleta_treino');
+            $table->foreignId('atleta_id')
+                ->constrained()
+                ->cascadeOnDelete();
+            $table->foreignId('exercicio_id')
+                ->constrained()
+                ->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -29,3 +33,5 @@ return new class extends Migration
         Schema::dropIfExists('treinos');
     }
 };
+
+

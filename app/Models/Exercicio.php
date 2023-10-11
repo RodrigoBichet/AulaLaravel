@@ -9,4 +9,8 @@ class Exercicio extends Model
 {
     use HasFactory;
     protected $fillable =['nome', 'descricao', 'categoria', 'dificuldade'];
+
+    public function treinos(){
+        return $this->hasMany(Treino::class);
+    }
 }

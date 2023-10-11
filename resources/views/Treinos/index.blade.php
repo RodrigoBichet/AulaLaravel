@@ -15,8 +15,7 @@
             <th>Id</th>
             <th>Nome</th>
             <th>Descrição</th>
-            <th>Exercício do treino</th>
-            <th>Atleta do treino</th>
+
 
 
         </tr>
@@ -27,8 +26,7 @@
                 <td><a href="/treino/{{$treino->id}}">{{$treino->id}}</a></td>
                 <td>{{$treino->nome}}</td>
                 <td>{{$treino->descricao}}</td>
-                <td>{{$treino->exercicio_treino}}</td>
-                <td>{{$treino->atleta_treino}}</td>
+
 
                 <td>
                     <a href="{{route('treino_edit', $treino->id)}}">Editar</a>
