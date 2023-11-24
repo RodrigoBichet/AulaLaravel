@@ -69,17 +69,19 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 ```bash php artisan tinker
 
 #atletas
-DB::Table('atletas')->get()
-DB::Table('atletas')->whereBetween('altura',[1.0,2.0])->orderBy('altura','asc')->get()
-DB::Table('atletas')->whereBetween('peso',[80,100])->orderBy('peso','desc')->get()
+Atleta::find(2)->load('treinos')
+Atleta::whereBetween('altura',[1.0,2.0])->orderBy('altura','asc')->get()
+Atleta::whereBetween('peso',[80,100])->orderBy('peso','desc')->get()
+
 
 #exericios
-DB::Table('exercicios')->get()
-DB::Table('exercicios')->orderBy('nome','asc')->get();
-DB::Table('exercicios')->orderBy('categoria','asc')->get();
+Exercicio::find(7)->load('treinos')
+Exercicio::orderBy('categoria','desc')->get()
+Exercicio::where('nome','like','%Na%')->get()
+
 
 #treinos
-DB::Table('treinos')->join('atletas','atleta_id','=','atletas.id')->get()->first()
-DB::Table('treinos')->join('exercicios','exercicio_id','=','exercicios.id')->get()->first()
-DB::Table('treinos')->join('atletas','atleta_id','=','atletas.id')->select('*','treinos.nome as nome','atletas.nome as nome_atleta')->get()->first()
+Treino::find(9)->load('exercicio')
+Treino::join('atletas','atleta_id','=','atletas.id')->get()->first()
+Treino::join('atletas','atleta_id','=','atletas.id')->select('*','treinos.nome as nome','atletas.nome as nome_atleta')->get()->last()
 
