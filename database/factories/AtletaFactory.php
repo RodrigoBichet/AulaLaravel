@@ -27,3 +27,4 @@ class AtletaFactory extends Factory
         ];
     }
 }
+
