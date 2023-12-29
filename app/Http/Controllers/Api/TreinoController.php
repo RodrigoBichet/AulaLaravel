@@ -181,9 +181,9 @@ class TreinoController extends Controller
         }
     }
 
-    public function exercicios(Treino $treino)
+    public function atletas(Treino $treino)
     {
-        return response()->json($treino->load('exercicios'));
+        return response()->json($treino->load('atletas'));
     }
 
 }

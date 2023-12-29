@@ -14,6 +14,7 @@ class ExercicioController extends Controller
 
     public function index(Request $request)
     {
+
         $per_page = $request->query('per_page');
         $exerciciosPaginated = Exercicio::paginate($per_page);
         $exerciciosPaginated->appends([
@@ -30,7 +31,7 @@ class ExercicioController extends Controller
             return response()->json(Exercicio::findOrFail($id));
         } catch (\Exception $error){
             $responseError =[
-                'Erro' => "O produto com id:$id não foi encontrado!",
+                'Erro' => "O exercicio com id:$id não foi encontrado!",
                 'Exception' => $error->getMessage(),
             ];
             $statusHttp = 404;
@@ -41,7 +42,13 @@ class ExercicioController extends Controller
 
     public function store(ExercicioRequest $request)
     {
+        $statusHttp = 500;
         try{
+             if(!$request->user()->tokenCan('is-admin')){
+                 $statusHttp = 403; //Forbidden - Sem permissão
+                 throw new Exception('Erro: sem permissão!');
+             }
+
             $newExercicio = $request->all();
             $newExercicio['importado'] = ($request->importado) ? true :false;
             $storedExercicio = Exercicio::create($newExercicio);
@@ -63,7 +70,9 @@ class ExercicioController extends Controller
 
 
     public function update(Request $request, $id){
+
         try{
+
             $data = $request ->all();
             $newExercicio = Exercicio::findOrFail($id);
             $newExercicio->update($data);

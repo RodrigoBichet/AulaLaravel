@@ -10,7 +10,7 @@ class Treino extends Model
     use HasFactory;
     protected $fillable =['nome', 'descricao', 'exercicio_treino', 'atleta_treino'];
 
-    public function atleta(){
+    public function atletas(){
         return $this->belongsTo(Atleta::class);
     }
     public function exercicios(){
@@ -23,4 +23,3 @@ class Treino extends Model
 //    }
 
 }
-

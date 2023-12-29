@@ -32,9 +32,10 @@ Route::post('/exercicio', [\App\Http\Controllers\Api\ExercicioController::class,
 Route::put ('/exercicio/{id}', [\App\Http\Controllers\Api\ExercicioController::class, 'update']);
 Route::delete('/exercicio/{id}', [\App\Http\Controllers\Api\ExercicioController::class, 'remove']);
 
+
 //Treinos com API
 //Route::get('/treino', [\App\Http\Controllers\Api\TreinoController::class, 'index']);
-Route::get('/treino/{id}', [\App\Http\Controllers\Api\TreinoController::class,'show']);
+//Route::get('/treino/{id}', [\App\Http\Controllers\Api\TreinoController::class,'show']);
 //Route::post('/treino', [\App\Http\Controllers\Api\TreinoController::class, 'store']);
 //Route::put ('/treino/{id}', [\App\Http\Controllers\Api\TreinoController::class, 'update']);
 //Route::delete('/treino/{id}', [\App\Http\Controllers\Api\TreinoController::class, 'remove']);
@@ -43,6 +44,51 @@ Route::get('/treino/{id}', [\App\Http\Controllers\Api\TreinoController::class,'s
 Route::apiResource('treino', \App\Http\Controllers\Api\TreinoController::class);
 
 //Rota para endpoint aninhado Exercicio e Treino
-Route::get('treino/{treino}/exercicios', [\App\Http\Controllers\Api\TreinoController::class, 'exercicios'])->name('treino.exercicios');
+Route::get('treino/{treino}/atletas', [\App\Http\Controllers\Api\TreinoController::class, 'atletas'])->name('treino.atletas');
 
-//Route::get('treino/{treino}/exercicios', [\App\Http\Controllers\Api\TreinoController::class, 'exercicios'])->name('treino.exercicios');
+//Rota com middleware
+
+Route::apiResource('users', \App\Http\Controllers\Api\UserController::class);
+
+Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
+Route::post('login', [\App\Http\Controllers\Api\LoginController::class,'login'])->name('login');
+
+Route::apiResource('exercicios', \App\Http\Controllers\Api\ExercicioController::class)
+            ->middleware('auth:sanctum');
+
+
+
+
+
+
+Route::middleware('auth:sanctum')->group(function () {
+
+    Route::apiResource('exercicios', \App\Http\Controllers\Api\ExercicioController::class)
+        ->middleware('ability:is-admin');
+
+    Route::controller(\App\Http\Controllers\Api\ExercicioController::class)->group(function(){
+        Route::get('exercicios','index');
+        Route::get('exercicios/{exercicios}','show');
+    });
+
+
+    Route::apiResource('users', \App\Http\Controllers\Api\UserController::class);
+    Route::post('logout', [\App\Http\Controllers\Api\LoginController::class,'logout']);
+});//grupo do sanctum
+
+Route::controller(\App\Http\Controllers\AtletaController::class)->group(function(){
+    Route::get('atletas','index');
+    Route::get('atletas/{atletas}','show');
+});
+
+Route::post('users', [\App\Http\Controllers\Api\UserController::class,'store']);
+Route::post('login', [\App\Http\Controllers\Api\LoginController::class,'login']);
+
+
+
+
+
+
