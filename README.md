@@ -64,3 +64,24 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Consultas da Atividade 7
+```bash php artisan tinker
+
+#atletas
+Atleta::find(2)->load('treinos')
+Atleta::whereBetween('altura',[1.0,2.0])->orderBy('altura','asc')->get()
+Atleta::whereBetween('peso',[80,100])->orderBy('peso','desc')->get()
+
+
+#exericios
+Exercicio::find(7)->load('treinos')
+Exercicio::orderBy('categoria','desc')->get()
+Exercicio::where('nome','like','%Na%')->get()
+
+
+#treinos
+Treino::find(9)->load('exercicio')
+Treino::join('atletas','atleta_id','=','atletas.id')->get()->first()
+Treino::join('atletas','atleta_id','=','atletas.id')->select('*','treinos.nome as nome','atletas.nome as nome_atleta')->get()->last()
+
