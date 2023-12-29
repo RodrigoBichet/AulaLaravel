@@ -70,7 +70,7 @@ class AtletaController extends Controller
         }
     }
 
-    public function remove($id){
+    public function destroy($id){
 
         try{
             if(Atleta::findOrFail($id)->delete())
@@ -83,3 +83,4 @@ class AtletaController extends Controller
         }
     }
 }
+

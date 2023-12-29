@@ -13,8 +13,14 @@ class Treino extends Model
     public function atleta(){
         return $this->belongsTo(Atleta::class);
     }
-    public function exercicio(){
+    public function exercicios(){
         return $this->belongsTo(Exercicio::class);
     }
+
+//    public function exercicios()
+//    {
+//        return $this->belongsToMany(Exercicio::class, 'exercicio_treino');
+//    }
+
 }
 
